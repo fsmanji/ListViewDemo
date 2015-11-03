@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.fsmanji.demo.R;
-import com.fsmanji.demo.contentprovider.FlickrPhotoContract;
+import com.fsmanji.demo.provider.FlickrPhotoContract;
 import com.fsmanji.demo.data.FlickrPhoto;
 
 /**

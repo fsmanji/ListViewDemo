@@ -1,4 +1,4 @@
-package com.fsmanji.demo.contentprovider;
+package com.fsmanji.demo.provider;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;

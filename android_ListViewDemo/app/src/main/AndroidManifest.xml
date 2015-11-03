@@ -16,8 +16,8 @@
 
         </activity>
         <provider
-            android:authorities="com.fsmanji.demo.contentprovider.FlickrPhotoProvider"
-            android:name="com.fsmanji.demo.contentprovider.FlickrPhotoProvider"
+            android:authorities="com.fsmanji.demo.provider.FlickrPhotoProvider"
+            android:name="com.fsmanji.demo.provider.FlickrPhotoProvider"
             android:multiprocess="true"
             android:exported="true"
             >
