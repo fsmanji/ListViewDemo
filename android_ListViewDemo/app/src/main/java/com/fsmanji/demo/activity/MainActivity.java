@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.fsmanji.demo.fragment.ContactsFragment;
+import com.fsmanji.demo.fragment.ExploreFragment2;
 import com.fsmanji.demo.fragment.ProviderBasedExploreFragment;
 import com.fsmanji.demo.fragment.ExploreFragment;
 
@@ -26,6 +27,7 @@ public class MainActivity extends Activity {
         ContactsFragment contactsFragment;
         ProviderBasedExploreFragment providerBasedExploreFragment;
         if (savedInstanceState != null) {
+            //retrive any existing fragment you want
             exploreFragment = (ExploreFragment)
                     getFragmentManager().findFragmentById(EXPLORE_ID);
             contactsFragment = (ContactsFragment) getFragmentManager().findFragmentById(CONTACTS_ID);
@@ -39,9 +41,14 @@ public class MainActivity extends Activity {
             getFragmentManager().beginTransaction().
                     replace(android.R.id.content, contactsFragment)
                     .commit();*/
-            providerBasedExploreFragment = new ProviderBasedExploreFragment();
+
+            /*providerBasedExploreFragment = new ProviderBasedExploreFragment();
             getFragmentManager().beginTransaction().
                     replace(android.R.id.content, providerBasedExploreFragment)
+                    .commit();*/
+            ExploreFragment2 exploreFragment2 = new ExploreFragment2();
+            getFragmentManager().beginTransaction().
+                    replace(android.R.id.content, exploreFragment2)
                     .commit();
         }
 

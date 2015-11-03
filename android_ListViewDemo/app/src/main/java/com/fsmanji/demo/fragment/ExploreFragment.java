@@ -77,7 +77,7 @@ public class ExploreFragment extends Fragment {
      * Load flickr interesting photos using the following api:
      * photos.interestingness.getList
      */
-    private void loadFlickrExplorePhotos() {
+    void loadFlickrExplorePhotos() {
         // Request a string response
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, url,
                 new Response.Listener<JSONObject>() {
