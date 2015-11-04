@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.fsmanji.demo">
+    package="com.fsmanji.demo"
+
+    >
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
@@ -8,7 +10,9 @@
     <application android:allowBackup="true" android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher"
         >
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.MainActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar"
+            >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

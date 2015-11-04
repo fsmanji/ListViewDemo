@@ -5,7 +5,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "demo.mobile.yahoo.com.mytt"
+        applicationId "com.fsmanji.demo"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1
@@ -25,12 +25,63 @@ dependencies {
 
     //glide
     compile 'com.github.bumptech.glide:glide:3.6.1'
-    compile 'com.android.support:support-v4:19.1.0'
+    compile 'com.android.support:support-v4:22.1.0'
 
-    compile 'com.android.support:cardview-v7:21.0.+'
-    compile 'com.android.support:recyclerview-v7:21.0.+'
+    compile 'com.android.support:cardview-v7:22.0.+'
+    compile 'com.android.support:recyclerview-v7:22.0.+'
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    //testCompile 'junit:junit:4.12'
-    //compile 'com.android.support:appcompat-v7:23.+'
+
+}
+
+dependencies {
+    //enable unit test
+    testCompile "org.robolectric:robolectric:3.0"
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:1.10.19'
+    testCompile 'org.hamcrest:hamcrest-library:1.3'
+    testCompile 'commons-io:commons-io:2.4'
+}
+
+
+task findbugs(type: FindBugs, dependsOn: 'assembleDebug') {
+    group = "Verification"
+    description = "Generate FindBugs report"
+
+    ignoreFailures = true
+    classes = fileTree('build/intermediates/classes/debug/')
+    source = fileTree('src')
+    classpath = files()
+
+    effort = 'max'
+    excludeFilter = file('./findbugs.xml')
+
+    reports {
+        xml.enabled = true
+        html.enabled = false
+        xml {
+            destination "build/findbugs/findbugs-output.xml"
+        }
+    }
+}
+
+task jacocoTestReport(type: JacocoReport) {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports"
+
+    classDirectories = fileTree(
+            dir: "${buildDir}/intermediates/classes/debug",
+            excludes: ['**/R.class',
+                       '**/R$*.class',
+                       '**/BuildConfig.*',
+                       '**/Manifest*.*']
+    )
+
+    sourceDirectories = files("src/main/java")
+    executionData = files("${buildDir}/jacoco/testDebug.exec")
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
 }

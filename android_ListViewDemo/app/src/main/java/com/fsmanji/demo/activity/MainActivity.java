@@ -1,6 +1,7 @@
 package com.fsmanji.demo.activity;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.os.Bundle;
 
 import com.fsmanji.demo.fragment.ContactsFragment;
@@ -19,40 +20,74 @@ public class MainActivity extends Activity {
 
     private static final int EXPLORE_ID = 100;
     private static final int CONTACTS_ID = 101;
+    public static final String EXTRA_MODE = "launch_mode";
+
+    public enum EMode{
+        Explore,
+        Contacts,
+        ProviderBasedExplore,
+        Explore2
+    };
+
+    private EMode mLaunchMode;
+    private Fragment mCurrentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        ExploreFragment exploreFragment;
-        ContactsFragment contactsFragment;
-        ProviderBasedExploreFragment providerBasedExploreFragment;
-        if (savedInstanceState != null) {
-            //retrive any existing fragment you want
-            exploreFragment = (ExploreFragment)
-                    getFragmentManager().findFragmentById(EXPLORE_ID);
-            contactsFragment = (ContactsFragment) getFragmentManager().findFragmentById(CONTACTS_ID);
-        } else {
-           /* exploreFragment = new ExploreFragment();
-            getFragmentManager().beginTransaction().
-                    replace(android.R.id.content, exploreFragment)
-                    .commit();*/
 
-            /*contactsFragment = new ContactsFragment();
-            getFragmentManager().beginTransaction().
-                    replace(android.R.id.content, contactsFragment)
-                    .commit();*/
-
-            /*providerBasedExploreFragment = new ProviderBasedExploreFragment();
-            getFragmentManager().beginTransaction().
-                    replace(android.R.id.content, providerBasedExploreFragment)
-                    .commit();*/
-            ExploreFragment2 exploreFragment2 = new ExploreFragment2();
-            getFragmentManager().beginTransaction().
-                    replace(android.R.id.content, exploreFragment2)
-                    .commit();
+        mLaunchMode =  (EMode)getIntent().getSerializableExtra(EXTRA_MODE);
+        if (mLaunchMode == null) {
+            mLaunchMode = EMode.Explore2;
         }
 
+        if (savedInstanceState == null) {
+            switch (mLaunchMode) {
+                case Explore:
+                    mCurrentFragment = new ExploreFragment();
+                    break;
+                case Explore2:
+                    mCurrentFragment = new ExploreFragment2();
+                    break;
+                case ProviderBasedExplore:
+                    mCurrentFragment = new ProviderBasedExploreFragment();
+                    break;
+                case Contacts:
+                    mCurrentFragment = new ContactsFragment();
+                    break;
+                default:
+                    mCurrentFragment = new ExploreFragment2();
+            }
 
+            getFragmentManager().beginTransaction().
+                    replace(android.R.id.content, mCurrentFragment)
+                    .commit();
+        } else {
+            mCurrentFragment = getFragmentManager().findFragmentById(android.R.id.content);
+        }
+
+    }
+
+    public EMode getLaunchMode() {
+        return mLaunchMode;
+    }
+    public Class getActiveFragment() {
+        if (mLaunchMode == null) {
+            return ExploreFragment2.class;
+        }
+        switch (mLaunchMode) {
+            case Explore:
+                return ExploreFragment.class;
+            case Explore2:
+                return ExploreFragment2.class;
+            case ProviderBasedExplore:
+                return ProviderBasedExploreFragment.class;
+            case Contacts:
+                return ContactsFragment.class;
+            default:
+                return ExploreFragment2.class;
+        }
     }
 
     @Override
